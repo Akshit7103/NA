@@ -1,0 +1,22 @@
+Microsoft Windows [Version 10.0.26200.7623]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator\Desktop\demo temp>python simple_hikvision_test.py
+
+============================================================
+HIKVISION STREAM TEST
+============================================================
+
+Enter NVR IP (e.g., 192.168.1.101): 192.168.1.101
+Enter Username (usually 'admin'): admin
+Enter Password: martial@1305
+Enter Camera Channel (1, 2, 3...): 2
+
+Testing: rtsp://admin:martial@1305@192.168.1.101:554/Streaming/Channels/202
+Connecting...
+[hevc @ 000001b3e9b34000] PPS id out of range: 0
+[hevc @ 000001b3e9b34000] PPS id out of range: 0
+✅ Connected!
+
+Reading video... Press 'q' to quit
+[hevc @ 000001b3e9c0eb40] Could not find ref with POC 24
