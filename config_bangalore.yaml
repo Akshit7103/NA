@@ -1,0 +1,66 @@
+# Video Analytics - Bangalore Office (Dahua NVR Channel 8)
+# Optimized for CPU-only: Intel i7-13700T, 32GB RAM, No GPU
+
+# Camera Configuration
+camera:
+  # Dahua NVR - Channel 8, Sub Stream (recommended for analytics)
+  # NVR IP: 172.16.11.89 | User: admin | Channel: 8 | SubType: 1 (sub stream)
+  source: "rtsp://admin:Admin%40123@172.16.11.89:554/cam/realmonitor?channel=8&subtype=1"
+
+  reconnect_attempts: 5
+  reconnect_delay: 5
+
+  # Skip every other frame - stream is 25fps, processing ~12 is plenty
+  frame_skip: 2
+
+# Detection Thresholds
+detection:
+  person_confidence: 0.5
+  phone_confidence: 0.3
+  face_similarity: 0.5
+
+  # Check face every 15 frames instead of 5 (reduces InsightFace calls)
+  face_check_interval: 15
+
+  # YOLO input size: 320 is much faster than 640 on CPU, good enough for 704x576 stream
+  yolo_imgsz: 320
+
+  # InsightFace detection size: 320 is faster, sufficient for sub-stream resolution
+  face_det_size: 320
+
+  # Only load detection + recognition (skip landmarks, genderage for speed)
+  insightface_modules:
+    - detection
+    - recognition
+
+# Timing Settings (in seconds)
+timing:
+  log_cooldown: 30
+  phone_alert_cooldown: 10
+  unauthorized_face_grace: 3.0
+  unauthorized_no_face_grace: 15.0
+  track_timeout: 5.0
+
+# Database Configuration
+database:
+  path: "data/database.db"
+  backup_enabled: true
+  backup_interval: 86400
+
+# Storage Paths
+storage:
+  faces_dir: "data/faces"
+  snapshots_dir: "static/snapshots"
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 5000
+  secret_key: "super_secret_key_change_this_later"
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/app.log"
+  max_size: 10485760
+  backup_count: 5
